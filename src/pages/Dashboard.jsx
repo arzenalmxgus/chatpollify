@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useChat } from '../contexts/ChatContext';
@@ -16,7 +16,7 @@ const Dashboard = () => {
   const [newPollQuestion, setNewPollQuestion] = React.useState('');
   const [newPollOptions, setNewPollOptions] = React.useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!user) {
       navigate('/');
     }

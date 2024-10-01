@@ -72,5 +72,23 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
   }
+}
+
+/* Spotify-inspired custom styles */
+.bg-spotify-black {
+  background-color: #121212;
+}
+
+.text-spotify-green {
+  color: #1DB954;
+}
+
+.hover\:bg-spotify-green:hover {
+  background-color: #1DB954;
+}
+
+.border-spotify-gray {
+  border-color: #282828;
 }

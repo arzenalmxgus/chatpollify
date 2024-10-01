@@ -7,19 +7,25 @@ import { Input } from '@/components/ui/input';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login({ username });
-    navigate('/dashboard');
+    const success = login({ username });
+    if (success) {
+      navigate('/dashboard');
+    } else {
+      setError('Login failed. User not registered.');
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black">
       <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-96">
         <h1 className="text-3xl font-bold mb-6 text-green-500">Login</h1>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Input

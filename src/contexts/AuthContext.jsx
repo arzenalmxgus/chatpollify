@@ -6,10 +6,15 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [registeredUsers, setRegisteredUsers] = useState([]);
 
   const login = (userData) => {
-    // In a real app, you'd validate credentials here
-    setUser(userData);
+    const isRegistered = registeredUsers.some(u => u.username === userData.username);
+    if (isRegistered) {
+      setUser(userData);
+      return true;
+    }
+    return false;
   };
 
   const logout = () => {
@@ -17,13 +22,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = (userData) => {
-    // In a real app, you'd send this data to your backend
-    // For now, we'll just set the user as if they've logged in
+    setRegisteredUsers([...registeredUsers, userData]);
     setUser(userData);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, login, logout, register, registeredUsers }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useChat } from '../contexts/ChatContext';
 import { usePoll } from '../contexts/PollContext';
@@ -7,12 +8,23 @@ import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { messages, sendMessage } = useChat();
   const { poll, votes, createPoll, vote } = usePoll();
   const [newMessage, setNewMessage] = React.useState('');
   const [newPollQuestion, setNewPollQuestion] = React.useState('');
   const [newPollOptions, setNewPollOptions] = React.useState('');
+
+  React.useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
+
+  if (!user) {
+    return null; // or return a loading spinner
+  }
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {

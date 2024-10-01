@@ -9,7 +9,7 @@ import { Progress } from '@/components/ui/progress';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const auth = useAuth();
   const { messages, sendMessage } = useChat();
   const { poll, votes, createPoll, vote } = usePoll();
   const [newMessage, setNewMessage] = React.useState('');
@@ -17,18 +17,18 @@ const Dashboard = () => {
   const [newPollOptions, setNewPollOptions] = React.useState('');
 
   useEffect(() => {
-    if (!user) {
+    if (!auth.user) {
       navigate('/');
     }
-  }, [user, navigate]);
+  }, [auth.user, navigate]);
 
-  if (!user) {
+  if (!auth.user) {
     return null; // or return a loading spinner
   }
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
-      sendMessage({ user: user.username, text: newMessage });
+      sendMessage({ user: auth.user.username, text: newMessage });
       setNewMessage('');
     }
   };
@@ -46,8 +46,8 @@ const Dashboard = () => {
     <div className="min-h-screen bg-black text-white p-8">
       <div className="max-w-4xl mx-auto">
         <header className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-green-500">Welcome, {user.username}!</h1>
-          <Button onClick={logout} className="bg-red-500 hover:bg-red-600">Logout</Button>
+          <h1 className="text-3xl font-bold text-green-500">Welcome, {auth.user.username}!</h1>
+          <Button onClick={auth.logout} className="bg-red-500 hover:bg-red-600">Logout</Button>
         </header>
 
         <div className="grid grid-cols-2 gap-8">

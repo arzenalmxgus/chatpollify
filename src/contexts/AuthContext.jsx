@@ -16,8 +16,14 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const register = (userData) => {
+    // In a real app, you'd send this data to your backend
+    // For now, we'll just set the user as if they've logged in
+    setUser(userData);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

@@ -77,10 +77,6 @@
 }
 
 /* Spotify-inspired custom styles */
-.bg-spotify-black {
-  background-color: #121212;
-}
-
 .text-spotify-green {
   color: #1DB954;
 }
@@ -93,7 +89,7 @@
   border-color: #282828;
 }
 
-/* Add this new style for the background image */
+/* Background image style */
 body {
   background-image: url('/background-image.jpg');
   background-size: cover;

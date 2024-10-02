@@ -92,3 +92,12 @@
 .border-spotify-gray {
   border-color: #282828;
 }
+
+/* Add this new style for the background image */
+body {
+  background-image: url('/background-image.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}

@@ -96,4 +96,11 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Ensure content is visible on top of the background */
+#root {
+  position: relative;
+  z-index: 1;
 }

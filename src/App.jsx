@@ -19,11 +19,13 @@ const App = () => (
           <TooltipProvider>
             <Toaster />
             <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-              </Routes>
+              <div className="min-h-screen">
+                <Routes>
+                  <Route path="/" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                </Routes>
+              </div>
             </BrowserRouter>
           </TooltipProvider>
         </PollProvider>

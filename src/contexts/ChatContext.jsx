@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import io from 'socket.io-client';
 
 const ChatContext = createContext();
 
@@ -6,30 +7,32 @@ export const useChat = () => useContext(ChatContext);
 
 export const ChatProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
+  const [activeUsers, setActiveUsers] = useState([]);
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    // In a real app, you'd connect to a real WebSocket server
-    const mockSocket = {
-      send: (message) => {
-        setMessages((prevMessages) => [...prevMessages, JSON.parse(message)]);
-      },
-    };
-    setSocket(mockSocket);
+    const newSocket = io('http://localhost:3001'); // Replace with your actual server URL
+    setSocket(newSocket);
 
-    return () => {
-      // Clean up socket connection
-    };
+    newSocket.on('message', (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    newSocket.on('activeUsers', (users) => {
+      setActiveUsers(users);
+    });
+
+    return () => newSocket.close();
   }, []);
 
   const sendMessage = (message) => {
     if (socket) {
-      socket.send(JSON.stringify(message));
+      socket.emit('sendMessage', message);
     }
   };
 
   return (
-    <ChatContext.Provider value={{ messages, sendMessage }}>
+    <ChatContext.Provider value={{ messages, sendMessage, activeUsers }}>
       {children}
     </ChatContext.Provider>
   );

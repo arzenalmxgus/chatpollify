@@ -11,7 +11,7 @@ export const ChatProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3001'); // Replace with your actual server URL
+    const newSocket = io('http://localhost:3001'); // Make sure this matches your server URL
     setSocket(newSocket);
 
     newSocket.on('message', (message) => {
@@ -28,6 +28,8 @@ export const ChatProvider = ({ children }) => {
   const sendMessage = (message) => {
     if (socket) {
       socket.emit('sendMessage', message);
+      // Add the message to the local state immediately for instant feedback
+      setMessages((prevMessages) => [...prevMessages, message]);
     }
   };
 

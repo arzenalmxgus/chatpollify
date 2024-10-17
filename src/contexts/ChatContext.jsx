@@ -1,5 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import io from 'socket.io-client';
+import { db } from '../firebase/config';
+import { collection, addDoc, onSnapshot, query, orderBy } from 'firebase/firestore';
+import { useAuth } from './AuthContext';
 
 const ChatContext = createContext();
 
@@ -7,23 +9,28 @@ export const useChat = () => useContext(ChatContext);
 
 export const ChatProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
-  const [socket, setSocket] = useState(null);
+  const { user } = useAuth();
 
   useEffect(() => {
-    const serverUrl = import.meta.env.VITE_SOCKET_SERVER_URL || 'https://socket-io-chat-app-demo.herokuapp.com/';
-    const newSocket = io(serverUrl);
-    setSocket(newSocket);
-
-    newSocket.on('message', (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
+    const q = query(collection(db, 'messages'), orderBy('createdAt', 'asc'));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const messagesData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setMessages(messagesData);
     });
 
-    return () => newSocket.close();
+    return () => unsubscribe();
   }, []);
 
-  const sendMessage = (message) => {
-    if (socket) {
-      socket.emit('sendMessage', message);
+  const sendMessage = async (message) => {
+    if (user) {
+      await addDoc(collection(db, 'messages'), {
+        user: user.username,
+        text: message,
+        createdAt: new Date()
+      });
     }
   };
 

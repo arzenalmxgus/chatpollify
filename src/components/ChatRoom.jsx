@@ -10,10 +10,10 @@ const ChatRoom = () => {
   const { user } = useAuth();
   const [newMessage, setNewMessage] = useState('');
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
     if (newMessage.trim()) {
-      sendMessage({ user: user.username, text: newMessage });
+      await sendMessage(newMessage);
       setNewMessage('');
       toast.success('Message sent!');
     }
@@ -23,8 +23,8 @@ const ChatRoom = () => {
     <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4 text-green-500">Chat Room</h2>
       <div className="h-64 overflow-y-auto mb-4 bg-gray-700 p-4 rounded">
-        {messages.map((msg, index) => (
-          <div key={index} className="mb-2">
+        {messages.map((msg) => (
+          <div key={msg.id} className="mb-2">
             <span className="font-bold text-green-400">{msg.user}: </span>
             <span className="text-white">{msg.text}</span>
           </div>

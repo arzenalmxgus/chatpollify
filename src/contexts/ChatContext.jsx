@@ -7,20 +7,15 @@ export const useChat = () => useContext(ChatContext);
 
 export const ChatProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
-  const [activeUsers, setActiveUsers] = useState([]);
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const serverUrl = import.meta.env.VITE_SOCKET_SERVER_URL || 'http://localhost:3001';
+    const serverUrl = import.meta.env.VITE_SOCKET_SERVER_URL || 'https://socket-io-chat-app-demo.herokuapp.com/';
     const newSocket = io(serverUrl);
     setSocket(newSocket);
 
     newSocket.on('message', (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
-    });
-
-    newSocket.on('activeUsers', (users) => {
-      setActiveUsers(users);
     });
 
     return () => newSocket.close();
@@ -29,13 +24,11 @@ export const ChatProvider = ({ children }) => {
   const sendMessage = (message) => {
     if (socket) {
       socket.emit('sendMessage', message);
-      // Add the message to the local state immediately for instant feedback
-      setMessages((prevMessages) => [...prevMessages, message]);
     }
   };
 
   return (
-    <ChatContext.Provider value={{ messages, sendMessage, activeUsers }}>
+    <ChatContext.Provider value={{ messages, sendMessage }}>
       {children}
     </ChatContext.Provider>
   );

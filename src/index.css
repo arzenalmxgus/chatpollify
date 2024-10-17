@@ -72,7 +72,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Helvetica', sans-serif;
+    font-family: 'Poppins', sans-serif;
   }
 }
 
@@ -91,7 +91,7 @@
 
 /* Background image style */
 body {
-  background-image: url('/background-image.jpg');
+  background-image: url('public/background-image.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

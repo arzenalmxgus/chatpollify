@@ -1,37 +1,33 @@
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext";
-import { ChatProvider } from "./contexts/ChatContext";
-import { PollProvider } from "./contexts/PollContext";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
+import React, { useEffect, useState } from "react";
+import { auth } from "./config"; // Import the initialized auth from your Firebase config
+import { onAuthStateChanged } from "firebase/auth";
 
-const queryClient = new QueryClient();
+const App = () => {
+  const [user, setUser] = useState(null);
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <ChatProvider>
-        <PollProvider>
-          <TooltipProvider>
-            <Toaster />
-            <BrowserRouter>
-              <div className="min-h-screen">
-                <Routes>
-                  <Route path="/" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                </Routes>
-              </div>
-            </BrowserRouter>
-          </TooltipProvider>
-        </PollProvider>
-      </ChatProvider>
-    </AuthProvider>
-  </QueryClientProvider>
-);
+  useEffect(() => {
+    // Listen for changes to the authentication state
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // User is logged in
+      } else {
+        setUser(null); // No user is logged in
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
+
+  return (
+    <div>
+      {user ? (
+        <p>Welcome, {user.email}</p>
+      ) : (
+        <p>No user is logged in</p>
+      )}
+    </div>
+  );
+};
 
 export default App;

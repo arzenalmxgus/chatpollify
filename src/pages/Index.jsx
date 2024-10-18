@@ -1,14 +1,33 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React, { useEffect, useState } from "react";
+import { auth } from "./config"; // Import the initialized auth from your Firebase config
+import { onAuthStateChanged } from "firebase/auth";
 
-const Index = () => {
+const App = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Listen for changes to the authentication state
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // User is logged in
+      } else {
+        setUser(null); // No user is logged in
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div>
+      {user ? (
+        <p>Welcome, {user.email}</p>
+      ) : (
+        <p>No user is logged in</p>
+      )}
     </div>
   );
 };
 
-export default Index;
+export default App;

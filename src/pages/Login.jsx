@@ -46,7 +46,7 @@ const Login = () => {
             />
           </div>
           <Button type="submit" className="w-full bg-green-500 hover:bg-green-600">
-            Log In
+            Exam Ni Rolly - Log In Namo!
           </Button>
         </form>
         <p className="mt-4 text-center text-white">

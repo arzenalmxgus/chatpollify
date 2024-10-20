@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { auth } from "./config"; // Import the initialized auth from your Firebase config
+import { auth } from "../firebase/config"; // Import the initialized auth from your Firebase config
 import { onAuthStateChanged } from "firebase/auth";
 
 const App = () => {
@@ -21,11 +21,7 @@ const App = () => {
 
   return (
     <div>
-      {user ? (
-        <p>Welcome, {user.email}</p>
-      ) : (
-        <p>No user is logged in</p>
-      )}
+      {user ? <p>Welcome, {user.email}</p> : <p>No user is logged in</p>}
     </div>
   );
 };

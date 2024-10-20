@@ -78,7 +78,7 @@
 
 /* Spotify-inspired custom styles */
 .text-spotify-green {
-  color: #FF0000;
+  color: #FF0000 !important;
 }
 
 .hover\:bg-spotify-green:hover {

@@ -50,7 +50,7 @@ const Login = () => {
           </Button>
         </form>
         <p className="mt-4 text-center text-white">
-          Don't have an account? <Link to="/register" className="text-green-500 hover:underline">Register</Link>
+          Wa kay account? <Link to="/register" className="text-green-500 hover:underline">Register</Link>
         </p>
       </div>
     </div>

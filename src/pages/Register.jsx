@@ -41,10 +41,7 @@ const Register = () => {
               className="w-full bg-gray-800 text-white"
             />
           </div>
-          <Button
-            type="submit"
-            className="w-full bg-green-500 hover:bg-green-600"
-          >
+          <Button type="submit" className="w-full bg-red-500 hover:bg-red-600">
             Register
           </Button>
         </form>

@@ -1,8 +1,8 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import ChatRoom from '../components/ChatRoom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import ChatRoom from "../components/ChatRoom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate("/");
   };
 
   if (!user) {
@@ -21,8 +21,15 @@ const Dashboard = () => {
     <div className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto">
         <header className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-green-500">Chat na diri, {user.username}!</h1>
-          <Button onClick={handleLogout} className="bg-red-500 hover:bg-red-600">Logout</Button>
+          <h1 className="text-3xl font-bold text-green-500 text-spotify-green">
+            Chat na diri, {user.username}!
+          </h1>
+          <Button
+            onClick={handleLogout}
+            className="bg-red-500 hover:bg-red-600"
+          >
+            Logout
+          </Button>
         </header>
 
         <ChatRoom />

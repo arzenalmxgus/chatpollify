@@ -21,7 +21,7 @@ const Dashboard = () => {
     <div className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto">
         <header className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-green-500">Welcome, {user.username}!</h1>
+          <h1 className="text-3xl font-bold text-green-500">Chat na diri, {user.username}!</h1>
           <Button onClick={handleLogout} className="bg-red-500 hover:bg-red-600">Logout</Button>
         </header>
 

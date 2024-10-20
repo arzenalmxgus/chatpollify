@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -15,9 +15,9 @@ const Login = () => {
     e.preventDefault();
     const success = login({ username });
     if (success) {
-      navigate('/dashboard');
+      navigate("/dashboard");
     } else {
-      setError('Login failed. User not registered.');
+      setError("Login failed. User not registered.");
     }
   };
 
@@ -45,12 +45,18 @@ const Login = () => {
               className="w-full bg-gray-800 text-white"
             />
           </div>
-          <Button type="submit" className="w-full bg-green-500 hover:bg-green-600">
+          <Button
+            type="submit"
+            className="w-full bg-green-500 hover:bg-green-600"
+          >
             Log In
           </Button>
         </form>
         <p className="mt-4 text-center text-white">
-          Wa kay account? <Link to="/register" className="text-green-500 hover:underline">Register</Link>
+          Wa kay account?{" "}
+          <Link to="/register" className="text-green-500 hover:underline">
+            Register
+          </Link>
         </p>
       </div>
     </div>

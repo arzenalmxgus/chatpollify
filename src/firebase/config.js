@@ -1,7 +1,7 @@
 // Import the necessary Firebase modules
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 // Firebase configuration using environment variables (for Vite)
@@ -22,15 +22,6 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
-
-// Set persistence mode to browser local storage
-setPersistence(auth, browserLocalPersistence)
-  .then(() => {
-    console.log("Persistence mode set to local storage");
-  })
-  .catch((error) => {
-    console.error("Error setting persistence: ", error);
-  });
 
 // Export the Firebase services
 export { app, analytics, auth, db };
